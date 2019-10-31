@@ -4,9 +4,10 @@ Basic webpack configuration is you want to compile this module
 
 webpack.config.js
 
-`const webpack = require('webpack');
- const path = require('path');
- const ExtractTextPlugin = require("mini-css-extract-plugin");
+```js
+const webpack = require('webpack');
+const path = require('path');
+const ExtractTextPlugin = require("mini-css-extract-plugin");
  
  module.exports = {
      entry: ['./js/index.js', './css/index.scss'],
@@ -78,11 +79,13 @@ webpack.config.js
              }
          ]
      }
- };`
+ };
+ ```
  
  package.json
  
-`{
+```json
+{
    "main": "main.js",
    "scripts": {
      "watch": "webpack -w --mode='development'",
@@ -110,5 +113,5 @@ webpack.config.js
    "dependencies": {
      "beebopsss": "^1.2.2"
    }
- }
-`
+}
+```
