@@ -173,7 +173,7 @@ export class Beebop {
         /***********************************************************/
         /***[DEBUG]***[Set to true to activate console logs]******/
         /*************[Set to false to remove them all]*********/
-        this._DEV = true;
+        this._DEV = false;
         this._DEV_TITLE = 'background: #222; color: #58E64E; font-weight: 700';
         this._DEV_HIGHLIGHT = 'padding: 5px 10px; background: #000000; color: #bada55; font-weight: 700;';
         /*******************************************************\
