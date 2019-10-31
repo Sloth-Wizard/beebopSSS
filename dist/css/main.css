@@ -1,0 +1,36 @@
+[data-beebop='next'],
+[data-beebop='prev'] {
+    position: absolute;
+    height: 100%;
+    padding: 0 .5rem;
+    cursor: pointer;
+}
+
+[data-beebop='next'] {
+    right: 0;
+}
+
+[data-beebop='prev'] {
+    left: 0;
+}
+
+[data-beebop='next'] span,
+[data-beebop='prev'] span {
+    position: relative;
+    display: block;
+    width: 15px;
+    height: 15px;
+    top: 50%;
+    border-top: 3px solid #fff;
+    border-left: 3px solid #fff;
+}
+
+[data-beebop='next'] span {
+    left: -50%;
+    transform: rotate(135deg) translateY(-50%);
+}
+
+[data-beebop='prev'] span {
+    left: 50%;
+    transform: rotate(-45deg) translateY(-50%);
+}
