@@ -232,6 +232,7 @@ export class Beebop {
             console.log(this.wrapper);
             console.log('[ ' + this.slideType + ' ]');
             console.log(this.slide);
+            console.log('Number of slides: ' + this.slide.length);
         }
 
         // Append the template to the wrapper
@@ -302,7 +303,9 @@ export class Beebop {
                                 this.wrapper.style[keyCore] = this._styles[key][keyCore];
                                 break;
                             case 1: // Container styles
-                                this.container.style[keyCore] = this._styles[key][keyCore];
+                                if (this.slide.length > 1) { // Only style the container if there is more than one element
+                                    this.container.style[keyCore] = this._styles[key][keyCore];
+                                }
                                 break;
                             case 2: // Images styles, need to loop thought each image or we get problems, me no like problem
                                 for (let keyImg in this.slide) {
@@ -327,68 +330,71 @@ export class Beebop {
             }
         }
 
-        // Prepend the last image to the container to have the 1st image as initial focus on the slider
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cIMAGES MANIPULATION', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cfirst-child image', this._DEV_HIGHLIGHT);
-            console.log(this.slide[0]);
-            console.log('%clast-child image', this._DEV_HIGHLIGHT);
-            console.log(this.slide[Object.keys(this.slide).length - 1]);
-        }
-        // This line move the last image of the slide object to the position of the first one
-        this.container.insertBefore(this.slide[Object.keys(this.slide).length - 1], this.slide[0]);
-
-        // Slider controls
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cSLIDER CONTROLS', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-        }
-
-        // Set necessary information inside variables to use them inside the function
-        let slides = this.slide;
-        let sliderOffset = options.sizeSlider;
-        let container = this.container;
-
-        function slideMove(data) {
-            let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
-            let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
-            switch (data) {
-                case 'next':
-                    container.style.left = sliderOffset + '%';
-                    container.insertBefore(slideLastChild, slideFirstChild);
-                    container.style.left = '';
-                    break;
-                case 'prev':
-                    container.style.left = -sliderOffset + '%';
-                    container.appendChild(slideFirstChild);
-                    container.style.left = '';
-                    break;
-                default:
-                    break;
+        // We only need to do the following if there is more than one element inside the slider
+        if (this.slide.length > 1) {
+            // Prepend the last element to the container only if there is more than one element to have the 1st element as initial focus on the slider
+            if (this._DEV === true) {
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cIMAGES MANIPULATION', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cfirst-child image', this._DEV_HIGHLIGHT);
+                console.log(this.slide[0]);
+                console.log('%clast-child image', this._DEV_HIGHLIGHT);
+                console.log(this.slide[Object.keys(this.slide).length - 1]);
             }
-        }
+            // This line move the last image of the slide object to the position of the first one
+            this.container.insertBefore(this.slide[Object.keys(this.slide).length - 1], this.slide[0]);
 
-        for (let key in this.controls.childNodes) {
-            if (this.controls.childNodes.hasOwnProperty(key)) {
-                // Put the dataset inside a variable otherwise it can't be used as function parameter
-                let data = this.controls.childNodes[key].dataset.beebop;
-                // Assign the _DEV value inside a variable otherwise it is unusable inside the listener
-                let _DEV = this._DEV;
-                // Add click listener to the clicked childNode
-                this.controls.childNodes[key].addEventListener('click', function (e) {
-                    slideMove(data);
-                    e.preventDefault();
-                    if (_DEV === true) {
-                        console.log(data);
+            // Slider controls
+            if (this._DEV === true) {
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cSLIDER CONTROLS', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+            }
+
+            // Set necessary information inside variables to use them inside the function
+            let slides = this.slide;
+            let sliderOffset = options.sizeSlider;
+            let container = this.container;
+
+            function slideMove(data) {
+                let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
+                let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
+                switch (data) {
+                    case 'next':
+                        container.style.left = sliderOffset + '%';
+                        container.insertBefore(slideLastChild, slideFirstChild);
+                        container.style.left = '';
+                        break;
+                    case 'prev':
+                        container.style.left = -sliderOffset + '%';
+                        container.appendChild(slideFirstChild);
+                        container.style.left = '';
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            for (let key in this.controls.childNodes) {
+                if (this.controls.childNodes.hasOwnProperty(key)) {
+                    // Put the dataset inside a variable otherwise it can't be used as function parameter
+                    let data = this.controls.childNodes[key].dataset.beebop;
+                    // Assign the _DEV value inside a variable otherwise it is unusable inside the listener
+                    let _DEV = this._DEV;
+                    // Add click listener to the clicked childNode
+                    this.controls.childNodes[key].addEventListener('click', function (e) {
+                        slideMove(data);
+                        e.preventDefault();
+                        if (_DEV === true) {
+                            console.log(data);
+                        }
+                    });
+                    if (this._DEV === true) {
+                        console.log(key);
+                        console.log(this.controls.childNodes[key]);
+                        console.log(this.controls.childNodes[key].dataset);
                     }
-                });
-                if (this._DEV === true) {
-                    console.log(key);
-                    console.log(this.controls.childNodes[key]);
-                    console.log(this.controls.childNodes[key].dataset);
                 }
             }
         }
