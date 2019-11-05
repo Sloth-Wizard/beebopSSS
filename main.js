@@ -360,15 +360,11 @@ export class Beebop {
                     container.style.left = sliderOffset + '%';
                     container.insertBefore(slideLastChild, slideFirstChild);
                     container.style.left = '';
-                    console.log(slideLastChild);
-                    console.log('Data: ' + data);
                     break;
                 case 'prev':
                     container.style.left = -sliderOffset + '%';
                     container.appendChild(slideFirstChild);
                     container.style.left = '';
-                    console.log(slideFirstChild);
-                    console.log('Data: ' + data);
                     break;
                 default:
                     break;
