@@ -157,7 +157,6 @@ export class Beebop {
      *
      * Options are optional (wow amazing, optional options, nice options) because all have a default value
      * @param {Object} options
-     * @param {string} type
      */
     constructor(
         wrapperID,
@@ -166,14 +165,14 @@ export class Beebop {
             nbSlideToShow: defaults.slidesInView,
             animTiming: defaults.animationSpeed,
             slideDirection: defaults.direction,
-            sizeSlider: defaults.size
-        },
-        type = 'img'
+            sizeSlider: defaults.size,
+            type: defaults.type
+        }
     ) {
         /***********************************************************/
         /***[DEBUG]***[Set to true to activate console logs]******/
         /*************[Set to false to remove them all]*********/
-        this._DEV = false;
+        this._DEV = defaults.DEV_ONOFF;
         this._DEV_TITLE = 'background: #222; color: #58E64E; font-weight: 700';
         this._DEV_HIGHLIGHT = 'padding: 5px 10px; background: #000000; color: #bada55; font-weight: 700;';
         /*******************************************************\
@@ -212,12 +211,13 @@ export class Beebop {
             console.log('Slide animTiming: [ ' + options.animTiming + ' ]');
             console.log('Slide direction: [ ' + options.slideDirection + ' ]');
             console.log('Slide size: [ ' + options.sizeSlider + ' ]');
+            console.log('Slide type: [ ' + options.type + ' ]');
         }
 
         // Get the wrapper and construct the slider from there
         this.wrapper = document.getElementById(wrapperID);
         // Get all the children to be put inside the slider
-        this.slideType = type;
+        this.slideType = options.type;
         if (this.slideType === 'img' || this.slideType === 'div' || this.slideType === 'span') {
             this.slide = this.wrapper.getElementsByTagName(this.slideType);
         } else {

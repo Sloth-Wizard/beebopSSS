@@ -1,5 +1,11 @@
 export default {
     /**
+     * Turn console output ON or OFF
+     *
+     * @type {boolean}
+     */
+    DEV_ONOFF: false,
+    /**
      * Display the controls or not
      *
      * @type {boolean}
@@ -37,6 +43,13 @@ export default {
      * @type {Number}
      */
     size: 100,
+
+    /**
+     * Type of the slides in the slider
+     *
+     * @type {string}
+     */
+    type: 'img',
 
     /**
      * List of classes used by the slider
