@@ -40,9 +40,9 @@ export class Beebop {
      *  - default option is 'ltr', the value is stored in our defaults
      *
      * @param {string} direction
-     * @param {boolean} arrows
+     * @param {boolean} controls
      */
-    setTemplate(direction, arrows) {
+    setTemplate(direction, controls) {
         // Then we process the direction value by assigning the right class to the _direction variable
         if (direction === 'ltr') {
             this._direction = defaults.classes.direction.ltr;
@@ -55,7 +55,7 @@ export class Beebop {
         ;
         this._template.container += this.xContainer;
 
-        if (arrows === true) {
+        if (controls === true) {
             this.xControls =
                 '<beebop-control-container id="' + defaults.classes.controls.active + '" class="' + this._direction + '">' +
                     '<span class="' + defaults.classes.controls.btn + '" data-beebop="' + defaults.classes.controls.data.next + '">' +
@@ -188,8 +188,8 @@ export class Beebop {
         }
 
         // Reset all defaults that are undefined if some were set by the user
-        if (options.arrows === undefined)
-            options.arrows = defaults.controls;
+        if (options.controls === undefined)
+            options.controls = defaults.controls;
         if (options.nbSlideToShow === undefined)
             options.nbSlideToShow = defaults.slidesInView;
         if (options.animTiming === undefined)
@@ -200,14 +200,14 @@ export class Beebop {
             options.sizeSlider = defaults.size;
 
         // Set the template with the values given by the options
-        this.setTemplate(options.slideDirection, options.arrows);
+        this.setTemplate(options.slideDirection, options.controls);
 
         // Get all options output to the console
         if (this._DEV === true) {
             console.log('%c----------------------------------------', this._DEV_TITLE);
             console.log('%cBEEBOPSLIDER OPTIONS', this._DEV_TITLE);
             console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('Slide arrows: [ ' + options.arrows + ' ]');
+            console.log('Slide controls: [ ' + options.controls + ' ]');
             console.log('Slide nbSlideToShow: [ ' + options.nbSlideToShow + ' ]');
             console.log('Slide animTiming: [ ' + options.animTiming + ' ]');
             console.log('Slide direction: [ ' + options.slideDirection + ' ]');
