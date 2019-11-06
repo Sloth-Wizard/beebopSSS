@@ -161,12 +161,13 @@ export class Beebop {
     constructor(
         wrapperID,
         options = {
-            arrows: defaults.controls,
+            controls: defaults.controls,
             nbSlideToShow: defaults.slidesInView,
             animTiming: defaults.animationSpeed,
             slideDirection: defaults.direction,
             sizeSlider: defaults.size,
-            type: defaults.type
+            type: defaults.type,
+            controlsColor: defaults.controlsColor
         }
     ) {
         /***********************************************************/
@@ -314,7 +315,7 @@ export class Beebop {
                                     }
                                 }
                                 break;
-                            case 3:
+                            case 3: // Control styles
                                 this.controls.style[keyCore] = this._styles[key][keyCore];
                                 break;
                             default:
@@ -327,6 +328,14 @@ export class Beebop {
                     }
                 }
                 i++;
+            }
+        }
+
+        // Now we apply the color to the controls
+        let controlArrows = this.controls.getElementsByTagName('span');
+        for (let key in controlArrows) {
+            if (controlArrows.hasOwnProperty(key)) {
+                controlArrows[key].style.borderColor = options.controlsColor;
             }
         }
 

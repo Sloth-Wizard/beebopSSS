@@ -52,6 +52,13 @@ export default {
     type: 'img',
 
     /**
+     * Color of the control arrows
+     *
+     * @type {string}
+     */
+    controlsColor: '#fff',
+
+    /**
      * List of classes used by the slider
      *
      * @type {Object}

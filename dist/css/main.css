@@ -21,8 +21,8 @@
     width: 15px;
     height: 15px;
     top: 50%;
-    border-top: 3px solid #fff;
-    border-left: 3px solid #fff;
+    border-top: 3px solid;
+    border-left: 3px solid;
 }
 
 [data-beebop='next'] span {
