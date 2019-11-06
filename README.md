@@ -1,9 +1,35 @@
 ## **Beebop super simple slider**
 
+As the name states it, very simple, two options available right now.
+
+### **How to use**
+
+Install it with npm
+```cmd
+npm install beebopsss@latest
+```
+
+Or copy it from this github repository
+```cmd
+git clone https://github.com/Sloth-Wizard/beebopSSS.git
+```
+
+Initialize the slider
+```js
+import { Beebop } from "beebopssLocation/main.js";
+
+new Beebop('yourWrapperID', {
+    // Here comes all the options we want to set, there are default values for each of them
+    arrows: true, // This is to show or not the controls, set to true because there is no automatic slide yet
+    type: 'img' // This is for the tagName of the element that will be in the slider
+});
+```
+
 Basic webpack configuration is you want to compile this module
+Modify yours if needed but don't overwrite it, this is just an example
+webpack config and package goes together ofc
 
 webpack.config.js
-
 ```js
 const webpack = require('webpack');
 const path = require('path');
@@ -82,8 +108,7 @@ const ExtractTextPlugin = require("mini-css-extract-plugin");
  };
  ```
  
- package.json
- 
+package.json
 ```json
 {
    "main": "main.js",
