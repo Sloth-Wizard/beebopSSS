@@ -6,7 +6,7 @@ As the name states it, very simple, two options available right now.
 
 Install it with npm
 ```cmd
-npm install beebopsss@latest
+npm install beebopsss
 ```
 
 Or copy it from this github repository
@@ -20,7 +20,7 @@ import { Beebop } from "beebopssLocation/main.js";
 
 new Beebop('yourWrapperID', {
     // Here comes all the options we want to set, there are default values for each of them
-    controls: true, // This is to show or not the controls, set to true because there is no automatic slide yet
+    control: true, // This is to show or not the controls, set to true because there is no automatic slide yet
     type: 'img', // This is for the tagName of the element that will be in the slider
     controlsColor: '#bada55' // Gives a color to the arrows (hexadecimal preferred)
 });

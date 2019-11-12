@@ -170,239 +170,241 @@ export class Beebop {
             controlsColor: defaults.controlsColor
         }
     ) {
-        /***********************************************************/
-        /***[DEBUG]***[Set to true to activate console logs]******/
-        /*************[Set to false to remove them all]*********/
-        this._DEV = defaults.DEV_ONOFF;
-        this._DEV_TITLE = 'background: #222; color: #58E64E; font-weight: 700';
-        this._DEV_HIGHLIGHT = 'padding: 5px 10px; background: #000000; color: #bada55; font-weight: 700;';
-        /*******************************************************\
-        /********************************************************\
-        /*********************************************************\*/
-
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cTEMPLATE_OBJECT', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log(this._template);
-        }
-
-        // Reset all defaults that are undefined if some were set by the user
-        if (options.controls === undefined)
-            options.controls = defaults.controls;
-        if (options.nbSlideToShow === undefined)
-            options.nbSlideToShow = defaults.slidesInView;
-        if (options.animTiming === undefined)
-            options.animTiming = defaults.animationSpeed;
-        if (options.slideDirection === undefined)
-            options.slideDirection = defaults.direction;
-        if (options.sizeSlider === undefined)
-            options.sizeSlider = defaults.size;
-
-        // Set the template with the values given by the options
-        this.setTemplate(options.slideDirection, options.control);
-
-        // Get all options output to the console
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cBEEBOPSLIDER OPTIONS', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('Slide arrows: [ ' + options.control + ' ]');
-            console.log('Slide nbSlideToShow: [ ' + options.nbSlideToShow + ' ]');
-            console.log('Slide animTiming: [ ' + options.animTiming + ' ]');
-            console.log('Slide direction: [ ' + options.slideDirection + ' ]');
-            console.log('Slide size: [ ' + options.sizeSlider + ' ]');
-            console.log('Slide type: [ ' + options.type + ' ]');
-        }
-
-        // Get the wrapper and construct the slider from there
-        this.wrapper = document.getElementById(wrapperID);
-        // Get all the children to be put inside the slider
-        this.slideType = options.type;
-        if (this.slideType === 'img' || this.slideType === 'div' || this.slideType === 'span') {
-            this.slide = this.wrapper.getElementsByTagName(this.slideType);
-        } else {
-            this.slide = this.wrapper.getElementsByClassName(this.slideType);
-        }
-
-        // Output wrapper, slide and container content to console
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cWRAPPER // SLIDE_OBJECT // SLIDE_TYPE', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log(this.wrapper);
-            console.log('[ ' + this.slideType + ' ]');
-            console.log(this.slide);
-            console.log('Number of slides: ' + this.slide.length);
-        }
-
-        // Append the template to the wrapper
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cTEMPLATE OBJECT LOOP', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-        }
-
-        for (let key in this._template) {
-            if (this._template.hasOwnProperty(key)) {
-                // We append each entry in the object _template
-                this.wrapper.innerHTML += this._template[key];
-
-                if (this._DEV === true) {
-                    console.log('Appended template -> [ ' + key + ' ]');
-                }
-            }
-        }
-
-        // Move images inside the container and add class
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cSLIDES MOVE AND ADD CLASS LOOP', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-        }
-
-        for (let i = 0; i < this.slide.length; i++) {
-            // Move the image
-            document.getElementById(defaults.classes.container.id).appendChild(this.slide[0]);
-            // Add the class
-            this.slide[0].classList.add(defaults.classes.slides);
+        if (document.getElementById(wrapperID)) {
+            /***********************************************************/
+            /***[DEBUG]***[Set to true to activate console logs]******/
+            /*************[Set to false to remove them all]*********/
+            this._DEV = defaults.DEV_ONOFF;
+            this._DEV_TITLE = 'background: #222; color: #58E64E; font-weight: 700';
+            this._DEV_HIGHLIGHT = 'padding: 5px 10px; background: #000000; color: #bada55; font-weight: 700;';
+            /*******************************************************\
+             /********************************************************\
+             /*********************************************************\*/
 
             if (this._DEV === true) {
-                console.log(i);
-                console.log(this.slide[0]);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cTEMPLATE_OBJECT', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log(this._template);
             }
-        }
 
-        /**
-         * Set the sizes with the value given by the options
-         *
-         * - size, wrapper, container, slide
-         */
-        this.setStyles(options.sizeSlider, this.wrapper, this._template.container, this.slide);
+            // Reset all defaults that are undefined if some were set by the user
+            if (options.controls === undefined)
+                options.controls = defaults.controls;
+            if (options.nbSlideToShow === undefined)
+                options.nbSlideToShow = defaults.slidesInView;
+            if (options.animTiming === undefined)
+                options.animTiming = defaults.animationSpeed;
+            if (options.slideDirection === undefined)
+                options.slideDirection = defaults.direction;
+            if (options.sizeSlider === undefined)
+                options.sizeSlider = defaults.size;
 
-        this.container = document.getElementById(defaults.classes.container.id);
-        this.controls = document.getElementById(defaults.classes.controls.active);
+            // Set the template with the values given by the options
+            this.setTemplate(options.slideDirection, options.control);
 
-        // Apply styles loop
-        if (this._DEV === true) {
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-            console.log('%cSTYLING LOOP', this._DEV_TITLE);
-            console.log('%c----------------------------------------', this._DEV_TITLE);
-        }
+            // Get all options output to the console
+            if (this._DEV === true) {
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cBEEBOPSLIDER OPTIONS', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('Slide arrows: [ ' + options.control + ' ]');
+                console.log('Slide nbSlideToShow: [ ' + options.nbSlideToShow + ' ]');
+                console.log('Slide animTiming: [ ' + options.animTiming + ' ]');
+                console.log('Slide direction: [ ' + options.slideDirection + ' ]');
+                console.log('Slide size: [ ' + options.sizeSlider + ' ]');
+                console.log('Slide type: [ ' + options.type + ' ]');
+            }
 
-        let i = 0;
-        for (let key in this._styles) {
-            if (this._styles.hasOwnProperty(key)) {
-                // Log object 1st layer keys
-                if (this._DEV === true) {
-                    console.log('%c' + key + ' - [ ' + i + ' ]', this._DEV_HIGHLIGHT);
-                }
-                for (let keyCore in this._styles[key]) {
-                    if (this._styles[key].hasOwnProperty(keyCore)) {
-                        switch (i) {
-                            case 0: // Wrapper styles
-                                this.wrapper.style[keyCore] = this._styles[key][keyCore];
-                                break;
-                            case 1: // Container styles
-                                if (this.slide.length > 1) { // Only style the container if there is more than one element
-                                    this.container.style[keyCore] = this._styles[key][keyCore];
-                                }
-                                break;
-                            case 2: // Images styles, need to loop thought each image or we get problems, me no like problem
-                                for (let keyImg in this.slide) {
-                                    if (this.slide.hasOwnProperty(keyImg)) {
-                                        this.slide[keyImg].style[keyCore] = this._styles[key][keyCore];
-                                    }
-                                }
-                                break;
-                            case 3: // Control styles
-                                this.controls.style[keyCore] = this._styles[key][keyCore];
-                                break;
-                            default:
-                                break;
-                        }
-                        // Log object core keys
-                        if (this._DEV === true) {
-                            console.log(keyCore + ' : ' + this._styles[key][keyCore]);
-                        }
+            // Get the wrapper and construct the slider from there
+            this.wrapper = document.getElementById(wrapperID);
+            // Get all the children to be put inside the slider
+            this.slideType = options.type;
+            if (this.slideType === 'img' || this.slideType === 'div' || this.slideType === 'span') {
+                this.slide = this.wrapper.getElementsByTagName(this.slideType);
+            } else {
+                this.slide = this.wrapper.getElementsByClassName(this.slideType);
+            }
+
+            // Output wrapper, slide and container content to console
+            if (this._DEV === true) {
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cWRAPPER // SLIDE_OBJECT // SLIDE_TYPE', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log(this.wrapper);
+                console.log('[ ' + this.slideType + ' ]');
+                console.log(this.slide);
+                console.log('Number of slides: ' + this.slide.length);
+            }
+
+            // Append the template to the wrapper
+            if (this._DEV === true) {
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cTEMPLATE OBJECT LOOP', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+            }
+
+            for (let key in this._template) {
+                if (this._template.hasOwnProperty(key)) {
+                    // We append each entry in the object _template
+                    this.wrapper.innerHTML += this._template[key];
+
+                    if (this._DEV === true) {
+                        console.log('Appended template -> [ ' + key + ' ]');
                     }
                 }
-                i++;
             }
-        }
 
-        // Now we apply the color to the controls
-        let controlArrows = this.controls.getElementsByTagName('span');
-        for (let key in controlArrows) {
-            if (controlArrows.hasOwnProperty(key)) {
-                controlArrows[key].style.borderColor = options.controlsColor;
-            }
-        }
-
-        // We only need to do the following if there is more than one element inside the slider
-        if (this.slide.length > 1) {
-            // Prepend the last element to the container only if there is more than one element to have the 1st element as initial focus on the slider
+            // Move images inside the container and add class
             if (this._DEV === true) {
                 console.log('%c----------------------------------------', this._DEV_TITLE);
-                console.log('%cIMAGES MANIPULATION', this._DEV_TITLE);
-                console.log('%c----------------------------------------', this._DEV_TITLE);
-                console.log('%cfirst-child image', this._DEV_HIGHLIGHT);
-                console.log(this.slide[0]);
-                console.log('%clast-child image', this._DEV_HIGHLIGHT);
-                console.log(this.slide[Object.keys(this.slide).length - 1]);
-            }
-            // This line move the last image of the slide object to the position of the first one
-            this.container.insertBefore(this.slide[Object.keys(this.slide).length - 1], this.slide[0]);
-
-            // Slider controls
-            if (this._DEV === true) {
-                console.log('%c----------------------------------------', this._DEV_TITLE);
-                console.log('%cSLIDER CONTROLS', this._DEV_TITLE);
+                console.log('%cSLIDES MOVE AND ADD CLASS LOOP', this._DEV_TITLE);
                 console.log('%c----------------------------------------', this._DEV_TITLE);
             }
 
-            // Set necessary information inside variables to use them inside the function
-            let slides = this.slide;
-            let sliderOffset = options.sizeSlider;
-            let container = this.container;
+            for (let i = 0; i < this.slide.length; i++) {
+                // Move the image
+                document.getElementById(defaults.classes.container.id).appendChild(this.slide[0]);
+                // Add the class
+                this.slide[0].classList.add(defaults.classes.slides);
 
-            function slideMove(data) {
-                let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
-                let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
-                switch (data) {
-                    case 'next':
-                        container.style.left = sliderOffset + '%';
-                        container.insertBefore(slideLastChild, slideFirstChild);
-                        container.style.left = '';
-                        break;
-                    case 'prev':
-                        container.style.left = -sliderOffset + '%';
-                        container.appendChild(slideFirstChild);
-                        container.style.left = '';
-                        break;
-                    default:
-                        break;
+                if (this._DEV === true) {
+                    console.log(i);
+                    console.log(this.slide[0]);
                 }
             }
 
-            for (let key in this.controls.childNodes) {
-                if (this.controls.childNodes.hasOwnProperty(key)) {
-                    // Put the dataset inside a variable otherwise it can't be used as function parameter
-                    let data = this.controls.childNodes[key].dataset.beebop;
-                    // Assign the _DEV value inside a variable otherwise it is unusable inside the listener
-                    let _DEV = this._DEV;
-                    // Add click listener to the clicked childNode
-                    this.controls.childNodes[key].addEventListener('click', function (e) {
-                        slideMove(data);
-                        e.preventDefault();
-                        if (_DEV === true) {
-                            console.log(data);
-                        }
-                    });
+            /**
+             * Set the sizes with the value given by the options
+             *
+             * - size, wrapper, container, slide
+             */
+            this.setStyles(options.sizeSlider, this.wrapper, this._template.container, this.slide);
+
+            this.container = document.getElementById(defaults.classes.container.id);
+            this.controls = document.getElementById(defaults.classes.controls.active);
+
+            // Apply styles loop
+            if (this._DEV === true) {
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('%cSTYLING LOOP', this._DEV_TITLE);
+                console.log('%c----------------------------------------', this._DEV_TITLE);
+            }
+
+            let i = 0;
+            for (let key in this._styles) {
+                if (this._styles.hasOwnProperty(key)) {
+                    // Log object 1st layer keys
                     if (this._DEV === true) {
-                        console.log(key);
-                        console.log(this.controls.childNodes[key]);
-                        console.log(this.controls.childNodes[key].dataset);
+                        console.log('%c' + key + ' - [ ' + i + ' ]', this._DEV_HIGHLIGHT);
+                    }
+                    for (let keyCore in this._styles[key]) {
+                        if (this._styles[key].hasOwnProperty(keyCore)) {
+                            switch (i) {
+                                case 0: // Wrapper styles
+                                    this.wrapper.style[keyCore] = this._styles[key][keyCore];
+                                    break;
+                                case 1: // Container styles
+                                    if (this.slide.length > 1) { // Only style the container if there is more than one element
+                                        this.container.style[keyCore] = this._styles[key][keyCore];
+                                    }
+                                    break;
+                                case 2: // Images styles, need to loop thought each image or we get problems, me no like problem
+                                    for (let keyImg in this.slide) {
+                                        if (this.slide.hasOwnProperty(keyImg)) {
+                                            this.slide[keyImg].style[keyCore] = this._styles[key][keyCore];
+                                        }
+                                    }
+                                    break;
+                                case 3: // Control styles
+                                    this.controls.style[keyCore] = this._styles[key][keyCore];
+                                    break;
+                                default:
+                                    break;
+                            }
+                            // Log object core keys
+                            if (this._DEV === true) {
+                                console.log(keyCore + ' : ' + this._styles[key][keyCore]);
+                            }
+                        }
+                    }
+                    i++;
+                }
+            }
+
+            // Now we apply the color to the controls
+            let controlArrows = this.controls.getElementsByTagName('span');
+            for (let key in controlArrows) {
+                if (controlArrows.hasOwnProperty(key)) {
+                    controlArrows[key].style.borderColor = options.controlsColor;
+                }
+            }
+
+            // We only need to do the following if there is more than one element inside the slider
+            if (this.slide.length > 1) {
+                // Prepend the last element to the container only if there is more than one element to have the 1st element as initial focus on the slider
+                if (this._DEV === true) {
+                    console.log('%c----------------------------------------', this._DEV_TITLE);
+                    console.log('%cIMAGES MANIPULATION', this._DEV_TITLE);
+                    console.log('%c----------------------------------------', this._DEV_TITLE);
+                    console.log('%cfirst-child image', this._DEV_HIGHLIGHT);
+                    console.log(this.slide[0]);
+                    console.log('%clast-child image', this._DEV_HIGHLIGHT);
+                    console.log(this.slide[Object.keys(this.slide).length - 1]);
+                }
+                // This line move the last image of the slide object to the position of the first one
+                this.container.insertBefore(this.slide[Object.keys(this.slide).length - 1], this.slide[0]);
+
+                // Slider controls
+                if (this._DEV === true) {
+                    console.log('%c----------------------------------------', this._DEV_TITLE);
+                    console.log('%cSLIDER CONTROLS', this._DEV_TITLE);
+                    console.log('%c----------------------------------------', this._DEV_TITLE);
+                }
+
+                // Set necessary information inside variables to use them inside the function
+                let slides = this.slide;
+                let sliderOffset = options.sizeSlider;
+                let container = this.container;
+
+                function slideMove(data) {
+                    let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
+                    let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
+                    switch (data) {
+                        case 'next':
+                            container.style.left = sliderOffset + '%';
+                            container.insertBefore(slideLastChild, slideFirstChild);
+                            container.style.left = '';
+                            break;
+                        case 'prev':
+                            container.style.left = -sliderOffset + '%';
+                            container.appendChild(slideFirstChild);
+                            container.style.left = '';
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                for (let key in this.controls.childNodes) {
+                    if (this.controls.childNodes.hasOwnProperty(key)) {
+                        // Put the dataset inside a variable otherwise it can't be used as function parameter
+                        let data = this.controls.childNodes[key].dataset.beebop;
+                        // Assign the _DEV value inside a variable otherwise it is unusable inside the listener
+                        let _DEV = this._DEV;
+                        // Add click listener to the clicked childNode
+                        this.controls.childNodes[key].addEventListener('click', function (e) {
+                            slideMove(data);
+                            e.preventDefault();
+                            if (_DEV === true) {
+                                console.log(data);
+                            }
+                        });
+                        if (this._DEV === true) {
+                            console.log(key);
+                            console.log(this.controls.childNodes[key]);
+                            console.log(this.controls.childNodes[key].dataset);
+                        }
                     }
                 }
             }
