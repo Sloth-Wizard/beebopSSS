@@ -57,27 +57,27 @@ export class Beebop {
         }
 
         this.xContainer =
-            '<beebop-container id="' + defaults.classes.container.id + '" class="' + defaults.classes.container.class + '"></beebop-container>'
+            '<' + defaults.classes.container.htmlElement + ' id="' + defaults.classes.container.id + '" class="' + defaults.classes.container.class + '"></' + defaults.classes.container.htmlElement + '>'
         ;
         this._template.container += this.xContainer;
 
         if (controls === true) {
             this.xControls =
-                '<beebop-control-container id="' + defaults.classes.controls.active + '" class="' + this._direction + '">' +
+                '<' + defaults.classes.controls.htmlElement + ' id="' + defaults.classes.controls.active + '" class="' + this._direction + '">' +
                     '<span class="' + defaults.classes.controls.btn + '" data-beebop="' + defaults.classes.controls.data.next + '">' +
                         '<span></span>' +
                     '</span>' +
                     '<span class="' + defaults.classes.controls.btn + '" data-beebop="' + defaults.classes.controls.data.previous + '">' +
                         '<span></span>' +
                     '</span>' +
-                '</beebop-control-container>'
+                '</' + defaults.classes.controls.htmlElement + '>'
             ;
             this._template.controls += this.xControls;
         }
 
         // @TODO: Add miniatures of the images so we can use it as navigation if the user sets miniatureNav to true
         if (miniatureNav === true) {
-            this.xMiniatureNav = '<beebop-minnav id="' + defaults.classes.slides.miniatures.id + '" class="' + defaults.classes.slides.miniatures.class + '"></beebop-minnav>';
+            this.xMiniatureNav = '<' + defaults.classes.slides.miniatures.htmlElement + ' id="' + defaults.classes.slides.miniatures.id + '" class="' + defaults.classes.slides.miniatures.class + '"></' + defaults.classes.slides.miniatures.htmlElement + '>';
             this._template.miniatureNav += this.xMiniatureNav;
         }
     }
