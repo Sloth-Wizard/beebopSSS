@@ -1,13 +1,4 @@
 .idea
-<<<<<<< HEAD
 utils/detach.js
 .travis.yml
 .npmignore
-=======
-utils
-<<<<<<< HEAD
-.travis.yml
->>>>>>> parent of 627d6f0... update
-=======
-.travis.yml
->>>>>>> parent of 627d6f0... update

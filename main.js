@@ -1,7 +1,7 @@
 import './dist/css/main.css';
 
 import defaults from './core/defaults.js';
-import 'utils/clone';
+import {cloneImage} from './utils/clone.js';
 
 import { BeebopContainer, BeebopControlsContainer } from "./core/customElements/defineElements.js";
 //import { detach } from "./utils/detach.js";
