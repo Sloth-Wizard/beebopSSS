@@ -82,6 +82,8 @@ export default {
             ltr: 'beebopslider--ltr',
             rtl: 'beebopslider--rtl'
         },
-        slides: 'beebopslide'
+        slides: {
+            class: 'beebopslide',
+        }
     }
 }

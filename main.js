@@ -68,6 +68,7 @@ export class Beebop {
             ;
             this._template.controls += this.xControls;
         }
+        // @TODO: Add miniatures of the images so we can use it as navigation if the user sets miniatureNav to true
     }
 
     /**
@@ -266,7 +267,7 @@ export class Beebop {
                 // Move the image
                 document.getElementById(defaults.classes.container.id).appendChild(this.slide[0]);
                 // Add the class
-                this.slide[0].classList.add(defaults.classes.slides);
+                this.slide[0].classList.add(defaults.classes.slides.class);
 
                 if (this._DEV === true) {
                     console.log(i);
@@ -367,6 +368,7 @@ export class Beebop {
                 let sliderOffset = options.sizeSlider;
                 let container = this.container;
 
+                // @TODO: If user sets animations true, we need to animate de images sliding
                 function slideMove(data) {
                     let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
                     let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
