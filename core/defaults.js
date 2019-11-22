@@ -5,12 +5,13 @@ export default {
      * @type {boolean}
      */
     DEV_ONOFF: false,
+
     /**
      * Display the controls or not
      *
      * @type {boolean}
      */
-    controls: false,
+    controls: true,
 
     /**
      * Slides visible in the wrapper
@@ -59,6 +60,13 @@ export default {
     controlsColor: '#fff',
 
     /**
+     * Adds miniatures to the template to use as navigation
+     *
+     * @type {boolean}
+     */
+    miniatureNav: false,
+
+    /**
      * List of classes used by the slider
      *
      * @type {Object}
@@ -84,6 +92,11 @@ export default {
         },
         slides: {
             class: 'beebopslide',
+            miniatures: {
+                class: 'beebop__miniatureNav',
+                id: 'beebopMinNav',
+                htmlElement: 'beebop-minNav'
+            }
         }
     }
 }

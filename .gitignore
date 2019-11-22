@@ -1,4 +1,4 @@
 .idea
-utils
+utils/detach.js
 .travis.yml
 .npmignore
