@@ -95,7 +95,7 @@ export default {
             miniatures: {
                 class: 'beebop__miniatureNav',
                 id: 'beebopMinNav',
-                htmlElement: 'beebop-minNav'
+                htmlElement: 'beebop-minnav'
             }
         }
     }

@@ -77,7 +77,7 @@ export class Beebop {
 
         // @TODO: Add miniatures of the images so we can use it as navigation if the user sets miniatureNav to true
         if (miniatureNav === true) {
-            this.xMiniatureNav = '<beebop-minNav id="' + defaults.classes.slides.miniatures.id + '" class="' + defaults.classes.slides.miniatures.class + '"></beebop-minNav>';
+            this.xMiniatureNav = '<beebop-minnav id="' + defaults.classes.slides.miniatures.id + '" class="' + defaults.classes.slides.miniatures.class + '"></beebop-minnav>';
             this._template.miniatureNav += this.xMiniatureNav;
         }
     }
