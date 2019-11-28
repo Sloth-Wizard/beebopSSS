@@ -43,5 +43,5 @@ Color for the controls arrows
 'img' is the default string parameter, you can tell the slider to use any html tag from a list  
 Example: 'div' or 'span'
 
-###**Additionnal information**
+### **Additionnal information**
 You'll need to use "@babel/preset-env" and "@babel/plugin-proposal-class-properties" to compile the module.
