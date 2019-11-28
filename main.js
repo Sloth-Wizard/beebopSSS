@@ -208,8 +208,8 @@ export class Beebop {
                 options.animations = defaults.animations;
             if (options.animationSpeed === undefined)
                 options.animationSpeed = defaults.animationSpeed;
-            if (options.animationEasing === undefined)
-                options.animationEasing = defaults.animationEasing;
+            if (options.animationStyle === undefined)
+                options.animationStyle = defaults.animationEasing;
             if (options.controls === undefined)
                 options.controls = defaults.controls;
             if (options.nbSlideToShow === undefined)
