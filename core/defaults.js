@@ -7,6 +7,27 @@ export default {
     DEV_ONOFF: false,
 
     /**
+     * Turn animations ON/OFF
+     *
+     * @type {boolean}
+     */
+    animations: false,
+
+    /**
+     * Duration of the animation in ms
+     *
+     * @type {Number}
+     */
+    animationSpeed: 150,
+
+    /**
+     * Animation style
+     *
+     * @type {string}
+     */
+    animationEasing: 'ease-in',
+
+    /**
      * Display the controls or not
      *
      * @type {boolean}
@@ -19,13 +40,6 @@ export default {
      * @type {Number}
      */
     slidesInView: 1,
-
-    /**
-     * Duration of the animation in milliseconds
-     *
-     * @type {Number}
-     */
-    animationSpeed: 1500,
 
     /**
      * Direction of the slider

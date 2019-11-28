@@ -173,9 +173,11 @@ export class Beebop {
     constructor(
         wrapperID,
         options = {
+            animations: defaults.animations,
+            animationSpeed: defaults.animationSpeed,
+            animationStyle: defaults.animationEasing,
             controls: defaults.controls,
             nbSlideToShow: defaults.slidesInView,
-            animTiming: defaults.animationSpeed,
             slideDirection: defaults.direction,
             sizeSlider: defaults.size,
             type: defaults.type,
@@ -202,16 +204,24 @@ export class Beebop {
             }
 
             // Reset all defaults that are undefined if some were set by the user
+            if (options.animations === undefined)
+                options.animations = defaults.animations;
+            if (options.animationSpeed === undefined)
+                options.animationSpeed = defaults.animationSpeed;
+            if (options.animationEasing === undefined)
+                options.animationEasing = defaults.animationEasing;
             if (options.controls === undefined)
                 options.controls = defaults.controls;
             if (options.nbSlideToShow === undefined)
                 options.nbSlideToShow = defaults.slidesInView;
-            if (options.animTiming === undefined)
-                options.animTiming = defaults.animationSpeed;
             if (options.slideDirection === undefined)
                 options.slideDirection = defaults.direction;
             if (options.sizeSlider === undefined)
                 options.sizeSlider = defaults.size;
+            if (options.type === undefined)
+                options.type = defaults.type;
+            if (options.controlsColor === undefined)
+                options.controlsColor = defaults.controlsColor;
             if (options.miniatureNav === undefined)
                 options.miniatureNav = defaults.miniatureNav;
 
@@ -223,12 +233,16 @@ export class Beebop {
                 console.log('%c----------------------------------------', this._DEV_TITLE);
                 console.log('%cBEEBOPSLIDER OPTIONS', this._DEV_TITLE);
                 console.log('%c----------------------------------------', this._DEV_TITLE);
+                console.log('Slide animations: [' + options.animations + ' ]');
+                console.log('Slide animationSpeed: [' + options.animationSpeed + ' ]');
+                console.log('Slide animationEasing: [' + options.animationEasing + ' ]');
                 console.log('Slide arrows: [ ' + options.controls + ' ]');
                 console.log('Slide nbSlideToShow: [ ' + options.nbSlideToShow + ' ]');
-                console.log('Slide animTiming: [ ' + options.animTiming + ' ]');
                 console.log('Slide direction: [ ' + options.slideDirection + ' ]');
                 console.log('Slide size: [ ' + options.sizeSlider + ' ]');
                 console.log('Slide type: [ ' + options.type + ' ]');
+                console.log('Slide controlsColor: [ ' + options.controlsColor + ' ]');
+                console.log('Slide miniatureNav: [ ' + options.miniatureNav + ' ]');
             }
 
             // Get the wrapper and construct the slider from there
@@ -390,20 +404,52 @@ export class Beebop {
                 let sliderOffset = options.sizeSlider;
                 let container = this.container;
 
-                // @TODO: If user sets animations true, we need to animate de images sliding
+                // Save all the styles inside an easy to reach object for re-usability if animations is activated by the user
+                if (options.animations === true) {
+                    this.slideStyles = {};
+                    Object.keys(this._styles.slideStyle).forEach((i) => {
+                        this.slideStyles[i] = this._styles.slideStyle[i];
+                    });
+
+                    if (this._DEV === true) {
+                        console.log('Saved styles: ' + this.slideStyles);
+                    }
+                }
+                let slideStyle = this.slideStyles;
+
                 function slideMove(data) {
                     let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
                     let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
                     switch (data) {
                         case 'next':
-                            container.style.left = sliderOffset + '%';
-                            container.insertBefore(slideLastChild, slideFirstChild);
-                            container.style.left = '';
+                            if (options.animations === true) {
+                                container.style.transform = 'translateX(' + slideStyle.width + ')';
+                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationEasing;
+                                setTimeout(() => {
+                                    container.insertBefore(slideLastChild, slideFirstChild);
+                                    container.style.transform = '';
+                                    container.style.transition = '';
+                                }, 150);
+                            } else {
+                                container.style.left = sliderOffset + '%';
+                                container.insertBefore(slideLastChild, slideFirstChild);
+                                container.style.left = '';
+                            }
                             break;
                         case 'prev':
-                            container.style.left = -sliderOffset + '%';
-                            container.appendChild(slideFirstChild);
-                            container.style.left = '';
+                            if (options.animations === true) {
+                                container.style.transform = 'translateX(-' + slideStyle.width + ')';
+                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationEasing;
+                                setTimeout(() => {
+                                    container.appendChild(slideFirstChild);
+                                    container.style.transform = '';
+                                    container.style.transition = '';
+                                }, 150);
+                            } else {
+                                container.style.left = -sliderOffset + '%';
+                                container.appendChild(slideFirstChild);
+                                container.style.left = '';
+                            }
                             break;
                         default:
                             break;
