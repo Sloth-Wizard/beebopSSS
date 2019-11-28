@@ -1,6 +1,7 @@
 import './dist/css/main.css';
 
 import defaults from './core/defaults.js';
+import {cloneImage} from './utils/clone.js';
 
 import { BeebopContainer, BeebopControlsContainer } from "./core/customElements/defineElements.js";
 //import { detach } from "./utils/detach.js";
@@ -13,10 +14,10 @@ new BeebopControlsContainer();
 
 export class Beebop {
     /**
-     * @type {{container: string, controls: string}}
+     * @type {{container: string, controls: string, miniatureNav: string}}
      * @private
      */
-    _template = {container: '', controls: ''};
+    _template = {container: '', controls: '', miniatureNav: ''};
 
     /**
      * @type {{wrapperStyle: {}, containerStyle: {}, slideStyle: {}, controlStyle: {}}}
@@ -31,6 +32,8 @@ export class Beebop {
     _direction = '';
 
     /**
+     * @param {string} direction
+     *
      * Here we wait for 2 options
      *
      * Options --
@@ -39,10 +42,13 @@ export class Beebop {
      *
      *  - default option is 'ltr', the value is stored in our defaults
      *
-     * @param {string} direction
-     * @param {boolean} arrows
+     * @param {boolean} controls
+     * Tell if arrows my be active or not, default is true
+     *
+     * @param {boolean} miniatureNav
+     * Tell if we need to add miniatures to the slider to use as navigation, default is false
      */
-    setTemplate(direction, arrows) {
+    setTemplate(direction, controls, miniatureNav) {
         // Then we process the direction value by assigning the right class to the _direction variable
         if (direction === 'ltr') {
             this._direction = defaults.classes.direction.ltr;
@@ -51,22 +57,28 @@ export class Beebop {
         }
 
         this.xContainer =
-            '<beebop-container id="' + defaults.classes.container.id + '" class="' + defaults.classes.container.class + '"></beebop-container>'
+            '<' + defaults.classes.container.htmlElement + ' id="' + defaults.classes.container.id + '" class="' + defaults.classes.container.class + '"></' + defaults.classes.container.htmlElement + '>'
         ;
         this._template.container += this.xContainer;
 
-        if (arrows === true) {
+        if (controls === true) {
             this.xControls =
-                '<beebop-control-container id="' + defaults.classes.controls.active + '" class="' + this._direction + '">' +
+                '<' + defaults.classes.controls.htmlElement + ' id="' + defaults.classes.controls.active + '" class="' + this._direction + '">' +
                     '<span class="' + defaults.classes.controls.btn + '" data-beebop="' + defaults.classes.controls.data.next + '">' +
                         '<span></span>' +
                     '</span>' +
                     '<span class="' + defaults.classes.controls.btn + '" data-beebop="' + defaults.classes.controls.data.previous + '">' +
                         '<span></span>' +
                     '</span>' +
-                '</beebop-control-container>'
+                '</' + defaults.classes.controls.htmlElement + '>'
             ;
             this._template.controls += this.xControls;
+        }
+
+        // @TODO: Add miniatures of the images so we can use it as navigation if the user sets miniatureNav to true
+        if (miniatureNav === true) {
+            this.xMiniatureNav = '<' + defaults.classes.slides.miniatures.htmlElement + ' id="' + defaults.classes.slides.miniatures.id + '" class="' + defaults.classes.slides.miniatures.class + '"></' + defaults.classes.slides.miniatures.htmlElement + '>';
+            this._template.miniatureNav += this.xMiniatureNav;
         }
     }
 
@@ -161,13 +173,16 @@ export class Beebop {
     constructor(
         wrapperID,
         options = {
-            control: defaults.controls,
+            animations: defaults.animations,
+            animationSpeed: defaults.animationSpeed,
+            animationStyle: defaults.animationEasing,
+            controls: defaults.controls,
             nbSlideToShow: defaults.slidesInView,
-            animTiming: defaults.animationSpeed,
             slideDirection: defaults.direction,
             sizeSlider: defaults.size,
             type: defaults.type,
-            controlsColor: defaults.controlsColor
+            controlsColor: defaults.controlsColor,
+            miniatureNav: defaults.miniatureNav
         }
     ) {
         if (document.getElementById(wrapperID)) {
@@ -189,31 +204,45 @@ export class Beebop {
             }
 
             // Reset all defaults that are undefined if some were set by the user
+            if (options.animations === undefined)
+                options.animations = defaults.animations;
+            if (options.animationSpeed === undefined)
+                options.animationSpeed = defaults.animationSpeed;
+            if (options.animationStyle === undefined)
+                options.animationStyle = defaults.animationEasing;
             if (options.controls === undefined)
                 options.controls = defaults.controls;
             if (options.nbSlideToShow === undefined)
                 options.nbSlideToShow = defaults.slidesInView;
-            if (options.animTiming === undefined)
-                options.animTiming = defaults.animationSpeed;
             if (options.slideDirection === undefined)
                 options.slideDirection = defaults.direction;
             if (options.sizeSlider === undefined)
                 options.sizeSlider = defaults.size;
+            if (options.type === undefined)
+                options.type = defaults.type;
+            if (options.controlsColor === undefined)
+                options.controlsColor = defaults.controlsColor;
+            if (options.miniatureNav === undefined)
+                options.miniatureNav = defaults.miniatureNav;
 
             // Set the template with the values given by the options
-            this.setTemplate(options.slideDirection, options.control);
+            this.setTemplate(options.slideDirection, options.controls, options.miniatureNav);
 
             // Get all options output to the console
             if (this._DEV === true) {
                 console.log('%c----------------------------------------', this._DEV_TITLE);
                 console.log('%cBEEBOPSLIDER OPTIONS', this._DEV_TITLE);
                 console.log('%c----------------------------------------', this._DEV_TITLE);
-                console.log('Slide arrows: [ ' + options.control + ' ]');
+                console.log('Slide animations: [' + options.animations + ' ]');
+                console.log('Slide animationSpeed: [' + options.animationSpeed + ' ]');
+                console.log('Slide animationEasing: [' + options.animationEasing + ' ]');
+                console.log('Slide arrows: [ ' + options.controls + ' ]');
                 console.log('Slide nbSlideToShow: [ ' + options.nbSlideToShow + ' ]');
-                console.log('Slide animTiming: [ ' + options.animTiming + ' ]');
                 console.log('Slide direction: [ ' + options.slideDirection + ' ]');
                 console.log('Slide size: [ ' + options.sizeSlider + ' ]');
                 console.log('Slide type: [ ' + options.type + ' ]');
+                console.log('Slide controlsColor: [ ' + options.controlsColor + ' ]');
+                console.log('Slide miniatureNav: [ ' + options.miniatureNav + ' ]');
             }
 
             // Get the wrapper and construct the slider from there
@@ -266,11 +295,19 @@ export class Beebop {
                 // Move the image
                 document.getElementById(defaults.classes.container.id).appendChild(this.slide[0]);
                 // Add the class
-                this.slide[0].classList.add(defaults.classes.slides);
+                this.slide[0].classList.add(defaults.classes.slides.class);
 
                 if (this._DEV === true) {
                     console.log(i);
                     console.log(this.slide[0]);
+                }
+
+                if (options.miniatureNav === true && options.type === 'img') {
+                    let tar = cloneImage(this.slide[0].src);
+
+                    if (this._DEV === true) {
+                        console.log(tar);
+                    }
                 }
             }
 
@@ -367,19 +404,52 @@ export class Beebop {
                 let sliderOffset = options.sizeSlider;
                 let container = this.container;
 
+                // Save all the styles inside an easy to reach object for re-usability if animations is activated by the user
+                if (options.animations === true) {
+                    this.slideStyles = {};
+                    Object.keys(this._styles.slideStyle).forEach((i) => {
+                        this.slideStyles[i] = this._styles.slideStyle[i];
+                    });
+
+                    if (this._DEV === true) {
+                        console.log('Saved styles: ' + this.slideStyles);
+                    }
+                }
+                let slideStyle = this.slideStyles;
+
                 function slideMove(data) {
                     let slideFirstChild = slides[0]; // First slide which is the one on the left of the focused one(s)
                     let slideLastChild = slides[Object.keys(slides).length - 1]; // Last slide of the list
                     switch (data) {
                         case 'next':
-                            container.style.left = sliderOffset + '%';
-                            container.insertBefore(slideLastChild, slideFirstChild);
-                            container.style.left = '';
+                            if (options.animations === true) {
+                                container.style.transform = 'translateX(' + slideStyle.width + ')';
+                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationStyle;
+                                setTimeout(() => {
+                                    container.insertBefore(slideLastChild, slideFirstChild);
+                                    container.style.transform = '';
+                                    container.style.transition = '';
+                                }, options.animationSpeed);
+                            } else {
+                                container.style.left = sliderOffset + '%';
+                                container.insertBefore(slideLastChild, slideFirstChild);
+                                container.style.left = '';
+                            }
                             break;
                         case 'prev':
-                            container.style.left = -sliderOffset + '%';
-                            container.appendChild(slideFirstChild);
-                            container.style.left = '';
+                            if (options.animations === true) {
+                                container.style.transform = 'translateX(-' + slideStyle.width + ')';
+                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationStyle;
+                                setTimeout(() => {
+                                    container.appendChild(slideFirstChild);
+                                    container.style.transform = '';
+                                    container.style.transition = '';
+                                }, options.animationSpeed);
+                            } else {
+                                container.style.left = -sliderOffset + '%';
+                                container.appendChild(slideFirstChild);
+                                container.style.left = '';
+                            }
                             break;
                         default:
                             break;

@@ -5,12 +5,34 @@ export default {
      * @type {boolean}
      */
     DEV_ONOFF: false,
+
+    /**
+     * Turn animations ON/OFF
+     *
+     * @type {boolean}
+     */
+    animations: false,
+
+    /**
+     * Duration of the animation in ms
+     *
+     * @type {Number}
+     */
+    animationSpeed: 150,
+
+    /**
+     * Animation style
+     *
+     * @type {string}
+     */
+    animationEasing: 'ease-in',
+
     /**
      * Display the controls or not
      *
      * @type {boolean}
      */
-    controls: false,
+    controls: true,
 
     /**
      * Slides visible in the wrapper
@@ -18,13 +40,6 @@ export default {
      * @type {Number}
      */
     slidesInView: 1,
-
-    /**
-     * Duration of the animation in milliseconds
-     *
-     * @type {Number}
-     */
-    animationSpeed: 1500,
 
     /**
      * Direction of the slider
@@ -59,6 +74,13 @@ export default {
     controlsColor: '#fff',
 
     /**
+     * Adds miniatures to the template to use as navigation
+     *
+     * @type {boolean}
+     */
+    miniatureNav: false,
+
+    /**
      * List of classes used by the slider
      *
      * @type {Object}
@@ -82,6 +104,13 @@ export default {
             ltr: 'beebopslider--ltr',
             rtl: 'beebopslider--rtl'
         },
-        slides: 'beebopslide'
+        slides: {
+            class: 'beebopslide',
+            miniatures: {
+                class: 'beebop__miniatureNav',
+                id: 'beebopMinNav',
+                htmlElement: 'beebop-minnav'
+            }
+        }
     }
 }
