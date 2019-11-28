@@ -1,6 +1,6 @@
 {
   "name": "beebopsss",
-  "version": "0.2.1",
+  "version": "0.2.13",
   "description": "Super Simple Slider in ES6 javascript, no dependecies needed",
   "main": "main.js",
   "scripts": {
