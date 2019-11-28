@@ -424,12 +424,12 @@ export class Beebop {
                         case 'next':
                             if (options.animations === true) {
                                 container.style.transform = 'translateX(' + slideStyle.width + ')';
-                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationEasing;
+                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationStyle;
                                 setTimeout(() => {
                                     container.insertBefore(slideLastChild, slideFirstChild);
                                     container.style.transform = '';
                                     container.style.transition = '';
-                                }, 150);
+                                }, options.animationSpeed);
                             } else {
                                 container.style.left = sliderOffset + '%';
                                 container.insertBefore(slideLastChild, slideFirstChild);
@@ -439,12 +439,12 @@ export class Beebop {
                         case 'prev':
                             if (options.animations === true) {
                                 container.style.transform = 'translateX(-' + slideStyle.width + ')';
-                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationEasing;
+                                container.style.transition = 'all ' + options.animationSpeed + 'ms ' + options.animationStyle;
                                 setTimeout(() => {
                                     container.appendChild(slideFirstChild);
                                     container.style.transform = '';
                                     container.style.transition = '';
-                                }, 150);
+                                }, options.animationSpeed);
                             } else {
                                 container.style.left = -sliderOffset + '%';
                                 container.appendChild(slideFirstChild);
