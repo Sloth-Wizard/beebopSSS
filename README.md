@@ -1,3 +1,5 @@
+# :no_entry: [DEPRECATED][OBSELETE]
+
 ## **Beebop super simple slider**
 
 As the name states it, very simple, no dependencies, pure javascript
